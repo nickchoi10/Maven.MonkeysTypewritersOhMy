@@ -10,5 +10,11 @@ public class UnsafeCopier extends Copier {
     }
 
     public void run() {
+        while(this.stringIterator.hasNext()){
+            if(this.stringIterator.hasNext()){ // has next return true if iteration has more elements.
+                this.copied+=this.stringIterator.hasNext()+" ";
+            }
+
+        }
     }
 }
