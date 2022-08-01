@@ -1,5 +1,8 @@
 package io.zipcoder;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 public class MonkeyTypewriter {
     public static void main(String[] args) {
         String introduction = "It was the best of times,\n" +
@@ -25,7 +28,20 @@ public class MonkeyTypewriter {
         // A Tale Of Two Cities.
         UnsafeCopier unsafe = new UnsafeCopier(introduction);
         SafeCopier safe =new SafeCopier(introduction);
-
+        ArrayList<Thread> unsafeThread = new ArrayList<Thread>();
+        ArrayList<Thread> safeThread = new ArrayList<Thread>();
+        for (int i=0; i<5; i++){
+            unsafeThread.add(new Thread(unsafe));
+        }
+        for (int i=0; i<5; i++){
+            safeThread.add(new Thread(safe));
+        }
+        for(Thread t: unsafeThread){
+            t.start();
+        }
+        for(Thread t: safeThread){
+            t.start();
+        }
 
         // This wait is here because main is still a thread and we want the main method to print the finished copies
         // after enough time has passed.
@@ -36,5 +52,9 @@ public class MonkeyTypewriter {
         }
 
         // Print out the copied versions here.
+
+        Logger.getGlobal().info("\nUNSAFE THREADED: \n" + unsafe.copied);
+        Logger.getGlobal().info("\nSAFE THREADED: \n" + safe.copied);
+
     }
 }
